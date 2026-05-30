@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StudyMate AI - Upload</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Space+Grotesk:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body data-api-base="http://localhost:8080">
+    <div class="bg-shape shape-1"></div>
+    <div class="bg-shape shape-2"></div>
+
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="sidebar-brand">StudyMate AI</div>
+        <div class="sidebar-tagline">AI study toolkit for students.</div>
+        <nav class="sidebar-nav">
+          <a class="sidebar-link" href="index.html">Home</a>
+          <a class="sidebar-link active" href="upload.html">Upload</a>
+          <a class="sidebar-link" href="quiz.html">Quiz</a>
+          <a class="sidebar-link" href="planner.html">Planner</a>
+          <a class="sidebar-link" href="dashboard.html">Dashboard</a>
+          <a class="sidebar-link" href="profile.html">Profile</a>
+        </nav>
+        <div class="sidebar-card">
+          <div class="sidebar-card-title">Need a quick demo?</div>
+          <p class="text-muted mb-3">Drop a PDF and show results instantly.</p>
+          <a class="btn btn-glow w-100" href="upload.html">Upload Now</a>
+        </div>
+      </aside>
+
+      <div class="content">
+        <header class="content-header compact-header">
+          <div>
+            <h1 class="page-title page-title-compact">Upload your notes</h1>
+            <p class="header-sub">Drop a PDF and get summary + quiz instantly.</p>
+          </div>
+          <div class="header-actions">
+            <button id="themeToggle" class="btn btn-outline-light" type="button">
+              <i class="fa-solid fa-moon"></i>
+            </button>
+            <button id="accountToggle" class="btn btn-outline-light" type="button">
+              Login / Register
+            </button>
+            <div id="userBadge" class="user-pill">Guest</div>
+            <button
+              id="logoutBtn"
+              class="btn btn-sm btn-outline-secondary hidden"
+              type="button"
+            >
+              Logout
+            </button>
+          </div>
+        </header>
+
+        <main class="content-body">
+          <div class="chat-container">
+            <section class="chat-card chat-shell" id="chatShell">
+              <div class="chat-feed" id="chatFeed">
+                <div class="chat-message ai">
+                  <div class="chat-message-header">StudyMate</div>
+                  <div class="chat-message-body">
+                    Upload a PDF or ask a quick question. I will respond right here.
+                  </div>
+                </div>
+              </div>
+              <div class="chat-input-bar">
+                <div class="chat-actions">
+                  <button
+                    id="uploadPdfBtn"
+                    class="icon-btn"
+                    type="button"
+                    aria-label="Upload PDF"
+                  >
+                    <i class="fa-solid fa-paperclip"></i>
+                  </button>
+                  <button
+                    id="uploadImageBtn"
+                    class="icon-btn"
+                    type="button"
+                    aria-label="Upload Image"
+                  >
+                    <i class="fa-regular fa-image"></i>
+                  </button>
+                  <button id="demoBtn" class="icon-btn" type="button" aria-label="Demo">
+                    <i class="fa-solid fa-bolt"></i>
+                  </button>
+                </div>
+                <textarea
+                  id="askQuestion"
+                  class="chat-textarea"
+                  rows="2"
+                  placeholder="Ask StudyMate (short question works best)"
+                ></textarea>
+                <div class="chat-send">
+                  <button class="btn btn-outline-light btn-sm" id="uploadBtn" type="button">
+                    <i class="fa-solid fa-file-arrow-up me-1"></i>Analyze
+                  </button>
+                  <button class="btn btn-glow btn-sm" id="askBtn" type="button">
+                    <i class="fa-solid fa-paper-plane me-1"></i>Send
+                  </button>
+                  <button
+                    class="btn btn-outline-secondary btn-sm"
+                    id="askClearBtn"
+                    type="button"
+                  >
+                    Clear
+                  </button>
+                </div>
+              </div>
+              <div class="status-row">
+                <div id="uploadSpinner" class="spinner hidden"></div>
+                <div id="askSpinner" class="spinner hidden"></div>
+                <small id="fileName" class="text-muted hidden"></small>
+                <small id="uploadStatus" class="text-muted"></small>
+                <small id="askStatus" class="text-muted"></small>
+              </div>
+              <input id="fileInput" type="file" accept=".pdf" class="d-none" />
+              <input id="askImage" type="file" accept="image/*" class="d-none" />
+            </section>
+
+            <section class="chat-card">
+              <div class="chat-header">
+                <h3>Summary</h3>
+                <span class="chat-pill">AI Output</span>
+              </div>
+              <div class="summary-block">
+                <h5>Short Summary</h5>
+                <p id="summaryShort" class="text-muted mt-3"></p>
+              </div>
+              <div class="summary-grid">
+                <div class="summary-block">
+                  <h6>Important Points</h6>
+                  <ul id="summaryKeyPoints" class="text-muted mt-3"></ul>
+                </div>
+                <div class="summary-block">
+                  <h6>Key Concepts</h6>
+                  <ul id="summaryKeyConcepts" class="text-muted mt-3"></ul>
+                </div>
+              </div>
+              <div class="summary-block mt-3">
+                <h6>Important Formulas</h6>
+                <ul id="summaryFormulas" class="text-muted mt-3"></ul>
+              </div>
+            </section>
+
+            <section class="chat-card">
+              <div class="chat-header">
+                <h3>Quiz</h3>
+                <span class="text-muted">MCQs</span>
+              </div>
+              <div id="quizContainer" class="mt-4"></div>
+            </section>
+
+            <section class="chat-card">
+              <div class="chat-header">
+                <h3>Flashcards</h3>
+                <span class="text-muted">Tap to flip</span>
+              </div>
+              <div id="flashcardContainer" class="flashcards mt-4"></div>
+            </section>
+
+            <section class="chat-card">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                  <h3>Study history</h3>
+                  <p class="section-subtitle">Saved sessions from this browser.</p>
+                </div>
+                <button
+                  id="clearHistoryBtn"
+                  class="btn btn-sm btn-outline-secondary"
+                  type="button"
+                >
+                  Clear
+                </button>
+              </div>
+              <ul id="historyList" class="history-list"></ul>
+            </section>
+          </div>
+        </main>
+
+        <footer class="footer footer-compact">
+          <div class="footer-grid">
+            <div>
+              <div class="footer-brand">StudyMate AI</div>
+              <p class="text-muted">AI study companion for university students.</p>
+              <div class="footer-social">
+                <a class="social-link" href="#" aria-label="Facebook">
+                  <i class="fa-brands fa-facebook-f"></i>
+                </a>
+                <a class="social-link" href="#" aria-label="Instagram">
+                  <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a class="social-link" href="#" aria-label="WhatsApp">
+                  <i class="fa-brands fa-whatsapp"></i>
+                </a>
+              </div>
+            </div>
+            <div>
+              <div class="footer-title">Contact</div>
+              <ul class="footer-list">
+                <li><i class="fa-solid fa-phone"></i> +1 (555) 732-8844</li>
+                <li><i class="fa-solid fa-envelope"></i> support@studymate.ai</li>
+                <li><i class="fa-solid fa-location-dot"></i> Campus Road, Lahore</li>
+              </ul>
+            </div>
+            <div>
+              <div class="footer-title">Quick Links</div>
+              <ul class="footer-list">
+                <li><a href="upload.html">Upload Notes</a></li>
+                <li><a href="quiz.html">Generate Quiz</a></li>
+                <li><a href="planner.html">Study Planner</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="footer-bottom">
+            <small>StudyMate AI - Hackathon demo build</small>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <div id="cookieBanner" class="cookie-banner hidden">
+      <div>
+        <strong>Cookie preferences</strong>
+        <p>We use cookies to remember your settings and improve your experience.</p>
+      </div>
+      <div class="cookie-actions">
+        <button id="cookieReject" class="btn btn-outline-secondary btn-sm" type="button">
+          Reject all
+        </button>
+        <button id="cookieAccept" class="btn btn-glow btn-sm" type="button">
+          Accept all
+        </button>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/lib/marked.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.5/dist/purify.min.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
