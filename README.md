@@ -47,11 +47,11 @@ StudyMateAI/
 
 ```bash
 # Root (shared deps)
-cd /tmp/workspace/qasimullah523/StudyMateAI
+cd StudyMateAI
 npm install
 
 # Backend
-cd /tmp/workspace/qasimullah523/StudyMateAI/backend
+cd backend
 npm install
 ```
 
@@ -72,7 +72,7 @@ JWT_EXPIRES=7d
 ### 3) Start the backend server
 
 ```bash
-cd /tmp/workspace/qasimullah523/StudyMateAI/backend
+cd backend
 npm run dev
 ```
 
