@@ -21,24 +21,21 @@ StudyMateAI is a full-stack web application that leverages AI technology to tran
 
 ## 🏗️ Tech Stack
 
-The project is built with modern web technologies:
+The project is built with a modern MERN stack:
 
-- **Frontend (45.1%)**
-  - JavaScript for interactive user interface
-  - HTML for structure
-  - CSS for styling
+- **Frontend**
+  - React + TypeScript (Vite)
+  - Tailwind CSS
+  - React Router
+  - DOMPurify + Marked (safe markdown rendering)
 
 - **Backend**
-  - **Express.js** - RESTful API server
-  - **Node.js** - Runtime environment
-  - **MongoDB/Mongoose** - Document database
-  - **Google Generative AI** - AI-powered content generation
-  - **PDF-Parse** - PDF document processing
-  - **JWT** - Secure authentication
-  - **bcryptjs** - Password encryption
-  - **CORS** - Cross-origin resource sharing
-  - **Helmet** - Security middleware
-  - **Rate Limiting** - API protection
+  - Node.js + Express (TypeScript)
+  - MongoDB + Mongoose
+  - Google Generative AI (Gemini)
+  - PDF parsing + audio book generation
+  - JWT auth + bcrypt
+  - CORS, Helmet, rate limiting
 
 ## 🚀 Getting Started
 
@@ -51,39 +48,50 @@ The project is built with modern web technologies:
 
 ### Installation & Running Locally
 
-#### Backend Setup
+#### Install dependencies
+
 ```bash
 cd backend
 npm install
-npm run dev
+
+cd ../frontend
+npm install
 ```
 
-The backend server will start on `http://localhost:3000` (or configured port).
+#### Run in development
 
-#### Frontend Setup
-The frontend is served at:
-```
-http://localhost:8080/
+```bash
+npm run dev --prefix backend
+npm run dev --prefix frontend
 ```
 
-Simply open this URL in your browser once the backend is running.
+Backend runs on `http://localhost:5000`.
+Frontend runs on `http://localhost:5173`.
 
 ### Environment Variables
 
 Create a `.env` file in the backend directory with:
+
 ```
 MONGODB_URI=your_mongodb_connection_string
-GOOGLE_API_KEY=your_google_generative_ai_key
+GEMINI_API_KEY=your_google_generative_ai_key
 JWT_SECRET=your_jwt_secret
-PORT=3000
+PORT=5000
+CORS_ORIGIN=http://localhost:5173
+```
+
+Create a `.env` file in the frontend directory with:
+
+```
+VITE_API_BASE=http://localhost:5000
 ```
 
 ## 📁 Project Structure
 
 ```
 StudyMateAI/
-├── frontend/          # Web interface (JavaScript, HTML, CSS)
-├── backend/           # Node.js API server
+├── frontend/          # React + Vite + Tailwind
+├── backend/           # Express + TypeScript API
 ├── docs/              # Documentation
 │   ├── ARCHITECTURE.md
 │   └── API.md
@@ -110,6 +118,7 @@ StudyMateAI/
 ## 📖 Documentation
 
 For detailed information, see:
+
 - **Architecture** - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
 - **API Reference** - [docs/API.md](docs/API.md)
 
@@ -128,4 +137,7 @@ Created by [qasimullah523](https://github.com/qasimullah523)
 ---
 
 **Happy Learning!** 🎓 Transform your study routine with StudyMateAI today!
+
+```
+
 ```

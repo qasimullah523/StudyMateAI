@@ -3,9 +3,9 @@
 ```mermaid
 flowchart LR
   A[Frontend
-HTML/CSS/Bootstrap + JS]
+React + Vite + Tailwind]
   B[Backend
-Node.js + Express]
+Node.js + Express + TypeScript]
   C[Gemini API]
   D[MongoDB Atlas]
   E[PDF Upload + Parsing]
@@ -21,6 +21,7 @@ Node.js + Express]
 ```
 
 **Flow**
+
 1. User uploads PDF in frontend.
 2. Backend parses PDF text.
 3. Text is sent to Gemini for summary/quiz.

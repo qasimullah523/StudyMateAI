@@ -1,5 +1,17 @@
 {
+  "name": "studymate-ai",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix backend\" \"npm run dev --prefix frontend\"",
+    "build": "npm run build --prefix backend && npm run build --prefix frontend",
+    "start": "npm run start --prefix backend"
+  },
   "dependencies": {
-    "marked": "^18.0.4"
+    "canvas": "^3.2.3",
+    "marked": "^18.0.4",
+    "pdfkit": "^0.18.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
   }
 }
